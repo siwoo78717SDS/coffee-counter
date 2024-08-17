@@ -61,7 +61,7 @@
             padding-bottom: 10px;
         }
 
-        .admin-section, .user-section, .login-section, .register-section, .verify-section {
+        .admin-section, .user-section, .login-section, .register-section {
             display: none; /* Hide these sections by default */
         }
 
@@ -261,51 +261,29 @@
             <input type="password" id="register-password">
             <button onclick="registerUser()">Register</button>
         </section>
-        <section id="verify-form" class="verify-section">
-            <h2>Email Verification</h2>
-            <p>A verification code has been sent to your email. Please enter it below:</p>
-            <label for="verification-code">Verification Code:</label>
-            <input type="text" id="verification-code">
-            <button onclick="verifyEmail()">Verify</button>
-        </section>
     </main>
-  
 
     <script>
         const users = [];
         const videos = [];
         const pointsByStar = { 1: 10, 2: 20, 3: 30, 4: 40, 5: 50 };
-        let verificationCode = '';
 
         function showLoginForm() {
             document.getElementById('login-form').style.display = 'block';
             document.getElementById('user-login-form').style.display = 'none';
             document.getElementById('register-form').style.display = 'none';
-            document.getElementById('verify-form').style.display = 'none';
         }
 
         function showUserLoginForm() {
             document.getElementById('user-login-form').style.display = 'block';
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('register-form').style.display = 'none';
-            document.getElementById('verify-form').style.display = 'none';
         }
 
         function showRegisterForm() {
             document.getElementById('register-form').style.display = 'block';
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('user-login-form').style.display = 'none';
-            document.getElementById('verify-form').style.display = 'none';
-        }
-
-        function generateVerificationCode() {
-            return Math.floor(100000 + Math.random() * 900000).toString();
-        }
-
-        function sendEmailVerification(email, code) {
-          //hello humans
-            console.log(`Sending email to ${email} with verification code: ${code}`);
-            alert(`A verification code has been sent to ${email}. Please check your email.`);
         }
 
         function registerUser() {
@@ -313,30 +291,15 @@
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
             if (username && email && password) {
-                verificationCode = generateVerificationCode();
-                sendEmailVerification(email, verificationCode);
-                document.getElementById('register-form').style.display = 'none';
-                document.getElementById('verify-form').style.display = 'block';
-            } else {
-                alert('Please fill out all fields');
-            }
-        }
-
-        function verifyEmail() {
-            const enteredCode = document.getElementById('verification-code').value;
-            if (enteredCode === verificationCode) {
-                const username = document.getElementById('register-username').value;
-                const email = document.getElementById('register-email').value;
-                const password = document.getElementById('register-password').value;
                 users.push({ username, email, password, points: 0 });
-                alert('Email verified and user registered successfully!');
+                alert('User registered successfully!');
                 document.getElementById('register-username').value = '';
                 document.getElementById('register-email').value = '';
                 document.getElementById('register-password').value = '';
-                document.getElementById('verify-form').style.display = 'none';
+                document.getElementById('register-form').style.display = 'none';
                 document.getElementById('user-login-form').style.display = 'block';
             } else {
-                alert('Incorrect verification code. Please try again.');
+                alert('Please fill out all fields');
             }
         }
 
